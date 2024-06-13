@@ -1,0 +1,15 @@
+description: ''
+name: Build python application.
+runs:
+  steps:
+  - name: Install git
+    run: apt update && apt install git -y
+    shell: bash
+  - name: Checkout
+    uses: actions/checkout@v4
+  - name: Install dependencies
+    run: |-
+      pip install -r requirements.txt
+      poetry install --with=dev
+    shell: bash
+  using: composite

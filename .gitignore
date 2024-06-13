@@ -1,0 +1,29 @@
+.venv
+
+# ignore coverage reports
+.coverage
+coverage/
+
+# ingore import linter
+/.import_linter_cache/
+
+# Distribution / packaging
+bin/
+/build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# SQlite
+*.sqlite3
+
+# Pre-commit local config
+.pre-commit-config.yaml

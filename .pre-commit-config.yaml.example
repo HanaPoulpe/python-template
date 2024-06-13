@@ -1,0 +1,70 @@
+repos:
+    # Commit lint
+    - repo: https://github.com/opensource-nepal/commitlint
+      rev: v1
+      hooks:
+        - id: commitlint
+
+    # Standard checks
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.6.0
+      hooks:
+        - id: check-ast
+        - id: debug-statements
+        - id: check-executables-have-shebangs
+        - id: check-shebang-scripts-are-executable
+        - id: check-json
+        - id: check-toml
+        - id: check-yaml
+        - id: end-of-file-fixer
+        - id: pretty-format-json
+          args:
+            - --autofix
+        - id: trailing-whitespace
+        # - id: detect-aws-credentials
+        - id: name-tests-test
+          args:
+            - --pytest-test-first
+        #- id: no-commit-to-branch
+        #  args:
+        #    - --branch
+        #    - main
+
+    - repo: local
+      hooks:
+        # Python
+        - id: ruff
+          name: Ruff
+          entry: poetry run python-ruff
+          language: python
+          language_version: "3.12"
+          types: [python]
+          require_serial: true
+          verbose: true
+
+        #- id: import-linter
+        #  name: Import Linter
+        #  entry: poetry run python-import-linter
+        #  language: python
+        #  language_version: "3.12"
+        #  types: [python]
+        #  require_serial: true
+        #  verbose: true
+
+        #- id: python-tests
+        #  name: Python Tests
+        #  entry: poetry run python-all-tests
+        #  language: python
+        #  language_version: "3.12"
+        #  types: [python]
+        #  require_serial: true
+        #  verbose: true
+
+        - id: python-type-check
+          name: Python Type Check
+          entry: poetry run python-type-check
+          language: python
+          language_version: "3.12"
+          types: [python]
+          require_serial: true
+          verbose: true

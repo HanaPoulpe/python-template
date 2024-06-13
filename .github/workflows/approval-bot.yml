@@ -1,0 +1,72 @@
+name: Approval Bot
+run-name: approval-bot
+'on':
+  pull_request:
+    branches:
+    - main
+jobs:
+  clear-automerge:
+    name: Clear automerge
+    runs-on: ubuntu-latest
+    steps:
+    - env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        PR_URL: ${{github.event.pull_request.html_url}}
+      name: Disable auto - merge
+      run: gh pr merge - -disable - auto - -merge "$PR_URL" || true
+  auto-approve-owner:
+    if: ${{github.event.pull_request.user.login == github.repository_owner}}
+    name: Auto approve owner
+    runs-on: ubuntu-latest
+    steps:
+    - env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        PR_URL: ${{github.event.pull_request.html_url}}
+      name: Auto approve owner
+      run: gh pr review "$PR_URL" --approve
+  auto-approve-dependabot:
+    if: ${{github.event.pull_request.user.login == 'dependabot[bot]'}}
+    name: Auto approve dependabot
+    needs:
+    - clear-automerge
+    runs-on: ubuntu-latest
+    steps:
+    - id: dependabot-metadata
+      name: Dependabot metadata
+      uses: dependabot/fetch-metadata@v2.1.0
+    - env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        PR_URL: ${{github.event.pull_request.html_url}}
+      if: ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch'
+        || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor'}}
+      name: Approve patch and minor updates
+      run: gh pr review "$PR_URL" --approve -b "I'm **approving** this pull request
+        because **it includes a patch or minor update**"
+    - if: ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major'
+        && steps.dependabot-metadata.outputs.dependency-type == 'direct:development'}}
+      name: Approve major updates of development dependencies
+      run: gh pr review "$PR_URL" --approve -b "I'm **approving** this pull request
+        because **it includes a major update of a dependency only used in development**"
+    - env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        PR_URL: ${{github.event.pull_request.html_url}}
+      if: ${{steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major'
+        && steps.dependabot-metadata.outputs.dependency-type == 'direct:production'}}
+      name: Comment major updates of production dependencies
+      run: |-
+        gh pr comment $PR_URL --body "I'm **not approving** this PR because **it includes a major update of a dependency used in production**"
+        gh pr edit $PR_URL --add-label "requires-manual-qa"
+        gh pr edit $PR_URL --add-assignee ${{ github.repository_owner }}
+    - env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        PR_URL: ${{github.event.pull_request.html_url}}
+      if: ${{ github.event.pull_request.assignees != null }}
+      name: Enable auto merge
+      run: gh pr merge --auto --merge "$PR_URL"
+  commit-linter:
+    if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
+    name: Commit linter
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check commit messages
+      uses: opensource-nepal/commitlint@v1
