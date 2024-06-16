@@ -1,5 +1,8 @@
 name: Approval Bot
 run-name: approval-bot
+permissions:
+  pull-requests: write
+  contents: write
 'on':
   pull_request:
     branches:

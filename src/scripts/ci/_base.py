@@ -41,6 +41,10 @@ class Workflow(base.Command, abc.ABC):
         workflow: collections.OrderedDict[str, Any] = collections.OrderedDict()
         workflow["name"] = self.workflow_name
         workflow["run-name"] = self.workflow_id
+
+        if permissions := self.get_permissions():
+            workflow["permissions"] = permissions
+
         workflow["on"] = self.get_triggers(*args, **kwargs)
         workflow["jobs"] = self.get_jobs(*args, **kwargs)
 
@@ -58,6 +62,9 @@ class Workflow(base.Command, abc.ABC):
                 "branches": ["main"],
             },
         }
+
+    def get_permissions(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        return {}
 
     def add_arguments(self, parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         subparsers = parser.add_subparsers(
