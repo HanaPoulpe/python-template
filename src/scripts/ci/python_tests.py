@@ -290,6 +290,11 @@ class GitHubPythonTest(base.Workflow):
                     self.get_checkout(),
                     self.get_build(),
                     {
+                        "name": "Install system dependencies",
+                        "id": "install-system-dependencies",
+                        "run": "apt-get update && apt-get install -y gpg",
+                    },
+                    {
                         "name": "Run coverage",
                         "id": "run-coverage",
                         "run": f"poetry run python-coverage {fail_under_param}",
@@ -299,6 +304,7 @@ class GitHubPythonTest(base.Workflow):
                         "id": "upload-coverage",
                         "uses": "codecov/codecov-action@v4",
                         "with": {
+                            "token": "${{ secrets.CODECOV_TOKEN }}",
                             "files": "coverage/report.xml",
                             "fail_ci_if_error": "true",
                             "verbose": "true",
