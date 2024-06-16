@@ -2,6 +2,7 @@ import argparse
 import contextlib
 import pathlib
 import sys
+from collections.abc import Iterable
 from typing import Any, ClassVar
 
 import pytest
@@ -206,9 +207,20 @@ class MyPy(base.CommandWithParser):
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
         try:
-            mypy.main(args=list(args) or self.get_default_files(), clean_exit=True)
+            mypy.main(
+                args=self._cleanup_filenames(args) or self.get_default_files(),
+                clean_exit=True,
+            )
         except SystemExit as err:
             raise base.CommandError() from err
+
+    def _cleanup_filenames(self, files: Iterable[Any]) -> list[str]:
+        def _cleanup(filename: Any) -> str:
+            if (file_as_str := str(filename)).startswith("src/"):
+                return file_as_str[4:]
+            return file_as_str
+
+        return [_cleanup(f) for f in files]
 
 
 class ImportLinter(base.Command):

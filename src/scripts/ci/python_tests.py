@@ -347,7 +347,7 @@ class GitHubPythonTest(base.Workflow):
             "needs": all_required,
             "env": {
                 "RESULTS": "\n".join([
-                    f"${{{{ needs.{need}.result =='success' }}}}"
+                    f"${{{{ needs.{need}.result }}}}"
                     for need in all_required
                 ]),
             },
