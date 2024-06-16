@@ -188,3 +188,9 @@ class ApprovalBot(base.Workflow):
                 "branches": ["main"],
             },
         }
+
+    def get_permissions(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        return {
+            "contents": "write",
+            "pull-requests": "write",
+        }
