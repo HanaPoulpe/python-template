@@ -91,7 +91,7 @@ jobs:
       run: 'poetry run python-coverage '
     - id: upload-coverage
       name: Upload coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         fail_ci_if_error: 'true'
         files: coverage/report.xml

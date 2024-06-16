@@ -289,7 +289,6 @@ class GitHubPythonTest(base.Workflow):
                 "steps": [
                     self.get_checkout(),
                     self.get_build(),
-                    self.get_file_changed(),
                     {
                         "name": "Run coverage",
                         "id": "run-coverage",
@@ -298,7 +297,7 @@ class GitHubPythonTest(base.Workflow):
                     {
                         "name": "Upload coverage",
                         "id": "upload-coverage",
-                        "uses": "codecov/codecov-action@v3",
+                        "uses": "codecov/codecov-action@v4",
                         "with": {
                             "files": "coverage/report.xml",
                             "fail_ci_if_error": "true",
