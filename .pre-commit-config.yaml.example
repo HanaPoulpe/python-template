@@ -1,7 +1,7 @@
 repos:
     # Commit lint
     - repo: https://github.com/opensource-nepal/commitlint
-      rev: v1
+      rev: v1.0
       hooks:
         - id: commitlint
 
@@ -31,7 +31,7 @@ repos:
         #    - main
 
     - repo: https://github.com/python-poetry/poetry
-      rev: '1.3.2'
+      rev: '1.8.0'
       hooks:
         - id: poetry-check
         - id: poetry-lock
