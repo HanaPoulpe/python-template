@@ -138,7 +138,7 @@ termcolor = "^2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
-ruff = "^0.5.6"
+ruff = "^0.5.7"
 mypy = "^1.11.1"
 SQLite3-0611 = "^0.0.1"
 coverage = "^7.6.1"
