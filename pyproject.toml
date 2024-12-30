@@ -144,7 +144,7 @@ SQLite3-0611 = "^0.0.1"
 coverage = "^7.6.9"
 pytest-cov = "^5.0.0"
 import-linter = "^2.1"
-types-pyyaml = "^6.0.12.20241221"
+types-pyyaml = "^6.0.12.20241230"
 commit-linter = "^1.0.3"
 
 [build-system]
