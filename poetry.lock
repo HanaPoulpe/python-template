@@ -253,14 +253,14 @@ typing-extensions = ">=3.10.0.0"
 
 [[package]]
 name = "import-linter"
-version = "2.3"
+version = "2.4"
 description = "Enforces rules for the imports within and between Python packages."
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "import_linter-2.3-py3-none-any.whl", hash = "sha256:5b851776782048ff1be214f1e407ef2e3d30dcb23194e8b852772941811a1258"},
-    {file = "import_linter-2.3.tar.gz", hash = "sha256:863646106d52ee5489965670f97a2a78f2c8c68d2d20392322bf0d7cc0111aa7"},
+    {file = "import_linter-2.4-py3-none-any.whl", hash = "sha256:2ad6d5a164cdcd5ebdda4172cf0169f73dde1a8925ef7216672c321cd38f8499"},
+    {file = "import_linter-2.4.tar.gz", hash = "sha256:4888fde83dd18bdbecd57ea1a98a1f3d52c6b6507d700f89f8678b44306c0ab4"},
 ]
 
 [package.dependencies]
@@ -531,4 +531,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "e5434cdd25923abb7e2554b4a2ee4604c6a321b5a63bac38a3494eb647a49a90"
+content-hash = "74e714ab16cfde301e4def04068c5ff34b7c3599889ea9f3680e9b3cc8894536"
