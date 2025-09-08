@@ -137,7 +137,7 @@ python = "^3.12"
 termcolor = "^2.5.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.4.1"
+pytest = "^8.4.2"
 ruff = "^0.12.12"
 mypy = "^1.17.1"
 SQLite3-0611 = "^0.0.1"
