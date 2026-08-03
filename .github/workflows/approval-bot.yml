@@ -72,4 +72,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check commit messages
-      uses: opensource-nepal/commitlint@v1
+      uses: opensource-nepal/commitlint@v2
